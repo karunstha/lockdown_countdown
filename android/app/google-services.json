@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "596524297219",
+    "firebase_url": "https://lockdown-countdown-d7cb8.firebaseio.com",
+    "project_id": "lockdown-countdown-d7cb8",
+    "storage_bucket": "lockdown-countdown-d7cb8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596524297219:android:5a554c977ab1d3ec62b236",
+        "android_client_info": {
+          "package_name": "com.halo.lockdowncountdown"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "596524297219-885ulclbirm3g4to1b2n5k1tvo3bs86o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArUWTHNx74HRfuBDs76BRzl1h4pRzQhbE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "596524297219-885ulclbirm3g4to1b2n5k1tvo3bs86o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
