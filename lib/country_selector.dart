@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lockdowncountdown/homepage.dart';
 
 import 'bloc/counties_list/countries_bloc.dart';
 import 'model_countries.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CountrySelector extends StatefulWidget {
   @override
@@ -14,7 +16,6 @@ class CountrySelector extends StatefulWidget {
 
 class CountrySelectorState extends State<CountrySelector> {
   CountriesBloc countriesBloc = CountriesBloc();
-
   @override
   void initState() {
     super.initState();
@@ -22,6 +23,12 @@ class CountrySelectorState extends State<CountrySelector> {
   }
 
   TextEditingController searchController = new TextEditingController();
+
+  saveCountryName(String country) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('countryName', country);
+    Navigator.popAndPushNamed(context, '/');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +40,7 @@ class CountrySelectorState extends State<CountrySelector> {
             children: <Widget>[
               Center(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     SizedBox(
                       height: 30.0,
@@ -40,7 +48,7 @@ class CountrySelectorState extends State<CountrySelector> {
                     Text(
                       "Select your country",
                       style: TextStyle(
-                          fontSize: 18.0,
+                          fontSize: 24.0,
                           color: Colors.grey.shade800,
                           fontWeight: FontWeight.w700),
                     ),
@@ -69,33 +77,44 @@ class CountrySelectorState extends State<CountrySelector> {
                       child: BlocBuilder<CountriesBloc, CountriesState>(
                           builder: (BuildContext context, state) {
                         if (state is StateCountriesLoaded) {
-                          return ListView.builder(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemCount: state.countriesList.length,
-                            itemBuilder: (context, i) {
-                              return Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-                                child: Container(
-                                    child: Row(children: <Widget>[
-                                  Image.network(
-                                    state.countriesList[i].getFlagURL,
-                                    height: 40,
-                                    width: 60,
-                                    fit: BoxFit.contain,
+                          return Expanded(
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              padding: EdgeInsets.only(bottom: 30),
+                              scrollDirection: Axis.vertical,
+                              itemCount: state.countriesList.length,
+                              physics: AlwaysScrollableScrollPhysics(),
+                              itemBuilder: (context, i) {
+                                return InkWell(
+                                  onTap: () => [
+                                    saveCountryName(
+                                        state.countriesList[i].getName)
+                                  ],
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                                    child: Container(
+                                        child: Row(children: <Widget>[
+                                      Image.network(
+                                        state.countriesList[i].getFlagURL,
+                                        height: 40,
+                                        width: 60,
+                                        fit: BoxFit.contain,
+                                      ),
+                                      SizedBox(
+                                        width: 24.0,
+                                      ),
+                                      Text(
+                                        state.countriesList[i].getName,
+                                        style: TextStyle(
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.w500),
+                                      )
+                                    ])),
                                   ),
-                                  SizedBox(
-                                    width: 24.0,
-                                  ),
-                                  Text(
-                                    state.countriesList[i].getName,
-                                    style: TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w500),
-                                  )
-                                ])),
-                              );
-                            },
+                                );
+                              },
+                            ),
                           );
                         } else {
                           return Container(

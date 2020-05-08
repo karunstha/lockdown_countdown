@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:lockdowncountdown/country_selector.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  HomePageState createState() => HomePageState();
+}
+
+class HomePageState extends State<HomePage> {
+  int a;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +56,12 @@ class HomePage extends StatelessWidget {
                     color: Colors.transparent,
                     child: InkWell(
                       borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                      onTap: () => {},
+                      onTap: () => {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => CountrySelector()),
+                        )
+                      },
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
                         child: Row(
